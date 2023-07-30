@@ -1,5 +1,0 @@
-class Hexagon():
-    def __init__(self, pos, color, piece):
-        self.pos = pos 
-        self.color = color
-        self.piece = piece
