@@ -1,5 +1,7 @@
 # Import libraries
 import pygame
+import os
+
 from math import *
 
 # Importing all custom made libraries
@@ -26,6 +28,18 @@ def draw_board(surface, color_board):
             if(col != '-'):
                 draw_hexagon(surface, COLOR_DICT[col], (x, y))
 
+def draw_pieces(surface, board):
+    for row in board:
+        for col in row:
+            if col.piece != None:
+                color = col.piece.color
+                name = col.piece.name
+                x, y = col.piece.coords
+                texture = os.path.join(f'images/imgs-80px/{color}_{name}.png')
+                img = pygame.image.load(texture)
+                img = pygame.transform.scale(img, (50,50))
+                surface.blit(img, (x-25, y-25))
+
 def highlight_selected_hexagon(surface, position, board, selected_hexagon):
         amount_selected = 0
         board_pos = None
@@ -36,7 +50,7 @@ def highlight_selected_hexagon(surface, position, board, selected_hexagon):
                     board_pos = elem.pos
         try:
             y, x = POS_TO_TILE[position]
-            if board[x][y].selected == False and amount_selected == 0:
+            if board[x][y].selected == False and amount_selected == 0 and board[x][y].piece != None:
                 draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], position)
                 board[x][y].selected = True
                 return POS_TO_TILE[position]

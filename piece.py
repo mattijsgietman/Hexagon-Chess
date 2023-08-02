@@ -9,6 +9,7 @@ class Pawn(Piece):
     def __init__(self, color, position, coords):
         super().__init__(color, position, coords)
         self.name = 'pawn'
+        self.has_moved = False
 
 
 class Knight(Piece):

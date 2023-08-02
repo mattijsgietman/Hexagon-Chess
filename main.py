@@ -14,10 +14,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
+# Initialize the first game state
 game = Board()
+game.hexagon_setup()
+game.piece_setup()
+
 selected_hexagon = None
 
 draw_board(screen, COLOR_BOARD)
+draw_pieces(screen, game.board)
+
 
 # Mainloop
 while running:
@@ -30,7 +36,7 @@ while running:
             coordinates = pygame.mouse.get_pos()
             hexagon_position = find_closest_point(coordinates)
             selected_hexagon = highlight_selected_hexagon(screen, hexagon_position, game.board, selected_hexagon)
-
+            draw_pieces(screen, game.board)
 
     pygame.display.flip()  # Update the screen
     clock.tick(60)  # Limit the frame rate to 60 FPS
