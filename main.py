@@ -45,6 +45,8 @@ while running:
             if selected_piece is not None and selected_hexagon[1] is not None:                                  # If this is the case make a move
                 move = Move(selected_piece, selected_hexagon[0], selected_hexagon[1])
                 make_move(board, move, selected_piece)
+                selected_hexagon = deselect_hexagons(screen, board)
+                turn = switch_turns(turn)
 
             draw_selected_hexagons(screen, selected_hexagon)                                                    # Visualize the selected hexagon
             draw_pieces(screen, board)                                                                          # Draw the pieces over the hexagon

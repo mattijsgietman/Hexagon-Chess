@@ -58,6 +58,11 @@ def deselect_hexagons(surface, board):
     draw_pieces(surface, board)
     return (None, None)
 
+def switch_turns(turn):
+    if turn == 'white':
+        return 'black'
+    return 'white'
+
 
 def make_move(board, move, piece):
     board[move.initial[1]][move.initial[0]].piece = None
