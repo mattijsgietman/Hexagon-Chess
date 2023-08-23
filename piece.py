@@ -3,6 +3,7 @@ class Piece:
         self.color = color
         self.position = position
         self.coords = coords
+        self.moves = []
 
 
 class Pawn(Piece):

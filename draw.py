@@ -40,26 +40,9 @@ def draw_pieces(surface, board):
                 img = pygame.transform.scale(img, (50,50))
                 surface.blit(img, (x-25, y-25))
 
-def highlight_selected_hexagon(surface, position, board, selected_hexagon):
-        amount_selected = 0
-        board_pos = None
-        for row in board:
-            for elem in row:
-                if elem.selected == True:
-                    amount_selected += 1
-                    board_pos = elem.pos
-        try:
-            y, x = POS_TO_TILE[position]
-            if board[x][y].selected == False and amount_selected == 0 and board[x][y].piece != None:
-                draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], position)
-                board[x][y].selected = True
-                return POS_TO_TILE[position]
-            elif board[x][y].selected == True:
-                draw_hexagon(surface, COLOR_DICT[ORIGINAL_COLORS[x][y]], position)
-                board[x][y].selected = False
-                return None
-            if board_pos != (x,y):
-                return selected_hexagon
-        except:
-            return selected_hexagon
-
+def draw_selected_hexagons(surface, positions):
+    for pos in positions:
+        if pos != None:
+          x, y = pos
+          coord = TILE_TO_POS[pos]
+          draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], coord)     
