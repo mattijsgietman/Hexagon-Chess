@@ -28,7 +28,6 @@ turn = 'white'                      # White starts the game
 draw_board(screen, COLOR_BOARD)     # Draw the board
 draw_pieces(screen, game.board)     # Draw the pieces
 
-
 # Mainloop
 while running:
     for event in pygame.event.get():
@@ -42,11 +41,21 @@ while running:
             selected_hexagon = selected_hexagons(hexagon_position, selected_hexagon, board, turn, screen)       # Select the correct hexagon
             selected_piece =  None if selected_hexagon[0] is None else board[selected_hexagon[0][1]][selected_hexagon[0][0]].piece     # Select the piece that was clicked on
 
+            if selected_piece:
+                selected_piece.legal_moves(board)
+                targets = find_target_locations(selected_piece.moves)
+                draw_selected_hexagons(screen, targets)
+
             if selected_piece is not None and selected_hexagon[1] is not None:                                  # If this is the case make a move
                 move = Move(selected_piece, selected_hexagon[0], selected_hexagon[1])
-                make_move(board, move, selected_piece)
-                selected_hexagon = deselect_hexagons(screen, board)
-                turn = switch_turns(turn)
+                if move in selected_piece.moves:
+                    make_move(board, move, selected_piece)
+                    selected_hexagon = deselect_hexagons(screen, board)
+                    turn = switch_turns(turn)
+                    has_moved(selected_piece)
+                else:
+                    selected_hexagon = deselect_hexagons(screen, board)
+                    selected_piece = deselect_piece(screen, board)
 
             draw_selected_hexagons(screen, selected_hexagon)                                                    # Visualize the selected hexagon
             draw_pieces(screen, board)                                                                          # Draw the pieces over the hexagon

@@ -9,6 +9,9 @@ from CONST import *
 from math import *
 
 def draw_hexagon(surface, color, position, width=0):
+    '''
+    Function to draw a single hexagon
+    '''
     x, y = position
     pygame.draw.polygon(surface, color, [
         (x + HEXAGON_RADIUS * cos(2 * pi * i / HEXAGON_VERTICES), y + HEXAGON_RADIUS * sin(2 * pi * i / HEXAGON_VERTICES))  # Calculate the lines of the polygon
@@ -16,6 +19,9 @@ def draw_hexagon(surface, color, position, width=0):
     ], width)
 
 def draw_board(surface, color_board):
+    '''
+    Function to draw all the hexagons that make up the chess board
+    '''
     for i, row in enumerate(color_board):
         for j, col in enumerate(row):
             # Calculate the position of each hexagon in the grid
@@ -29,6 +35,9 @@ def draw_board(surface, color_board):
                 draw_hexagon(surface, COLOR_DICT[col], (x, y))
 
 def draw_pieces(surface, board):
+    '''
+    Function that draws all the pieces on the chessboard
+    '''
     for row in board:
         for col in row:
             if col.piece != None:
@@ -41,8 +50,12 @@ def draw_pieces(surface, board):
                 surface.blit(img, (x-25, y-25))
 
 def draw_selected_hexagons(surface, positions):
+    '''
+    Function to visualize which hexagon(s) has been selected. This function is also used to visualize the legal moves of a piece
+    '''
     for pos in positions:
         if pos != None:
-          x, y = pos
-          coord = TILE_TO_POS[pos]
-          draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], coord)     
+            x, y = pos
+            coord = TILE_TO_POS[pos]
+            draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], coord) 
+

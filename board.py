@@ -11,7 +11,7 @@ class Board():
             [None, None, None, None],
             [None, None, None, None, None],
             [None, None, None, None, None, None],
-            [None, None, None, None, None],
+            [None, None, None, None, None, None],
             [None, None, None, None, None, None],
             [None, None, None, None, None],
             [None, None, None, None, None, None],
@@ -19,7 +19,7 @@ class Board():
             [None, None, None, None, None, None],
             [None, None, None, None, None],
             [None, None, None, None, None, None],
-            [None, None, None, None, None],
+            [None, None, None, None, None, None],
             [None, None, None, None, None, None],
             [None, None, None, None, None],
             [None, None, None, None],
@@ -50,6 +50,7 @@ class Board():
         self.board[4][4].piece = Pawn('black', (4,4), TILE_TO_POS[(4,4)])
         self.board[5][1].piece = Pawn('black', (1,5), TILE_TO_POS[(1,5)])
         self.board[5][4].piece = Pawn('black', (4,5), TILE_TO_POS[(4,5)])
+        self.board[6][5].piece = Pawn('black', (5,6), TILE_TO_POS[(5,6)])  # testing
         self.board[6][1].piece = Pawn('black', (1,6), TILE_TO_POS[(1,6)])
         self.board[6][3].piece = Pawn('black', (3,6), TILE_TO_POS[(3,6)])
         self.board[7][2].piece = Pawn('black', (2,7), TILE_TO_POS[(2,7)])
@@ -72,6 +73,7 @@ class Board():
         self.board[15][4].piece = Pawn('white', (4,15), TILE_TO_POS[(4,15)])
         self.board[14][1].piece = Pawn('white', (1,14), TILE_TO_POS[(1,14)])
         self.board[14][3].piece = Pawn('white', (3,14), TILE_TO_POS[(3,14)])
+        self.board[14][5].piece = Pawn('white', (5,14), TILE_TO_POS[(5,14)])
         self.board[13][2].piece = Pawn('white', (2,13), TILE_TO_POS[(2,13)])
         self.board[13][3].piece = Pawn('white', (3,13), TILE_TO_POS[(3,13)])
         self.board[12][2].piece = Pawn('white', (2,12), TILE_TO_POS[(2,12)])
