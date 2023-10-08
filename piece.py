@@ -1,6 +1,6 @@
 from CONST import *
 from move import Move
-from helper import on_board, empty_hexagon, piece_color_on_position
+from helper import on_board, empty_hexagon, piece_color_on_position, calculate_offset
 
 class Piece:
     def __init__(self, color, position, coords):
@@ -39,8 +39,6 @@ class Pawn(Piece):
                 if empty_hexagon(target, board):
                     move = Move(self, self.position, target)
                     self.moves.append(move)
-        
-        # Diagonal moves
 
         # Taking an enemy piece to the left
         target = (position_col, position_row + (1 * self.dir))
@@ -62,11 +60,30 @@ class Knight(Piece):
         super().__init__(color, position, coords)
         self.name = 'knight'
 
+    def legal_moves(self, board):
+        '''
+        Calculate all the valid moves for a knight to make
+        '''
+        
+        self.moves = []
+        position_col, position_row = self.position
+
+        # Moving to the square 2 places up and 1 place to the left
+        offset = calculate_offset(position_row, 1)
+        target = (position_col - 1 - offset, position_row - 4)
+        if on_board(target):
+            if empty_hexagon(target, board) or piece_color_on_position(target, board) != self.color:
+                move = Move(self, self.position, target)
+                self.moves.append(move)
+
 
 class Bishop(Piece):
     def __init__(self, color, position, coords):
         super().__init__(color, position, coords)
         self.name = 'bishop'
+
+    def legal_moves(self, board):
+        pass
 
 
 class Rook(Piece):
@@ -74,11 +91,17 @@ class Rook(Piece):
         super().__init__(color, position, coords)
         self.name = 'rook'
 
+    def legal_moves(self, board):
+        pass
+
 
 class Queen(Piece):
     def __init__(self, color, position, coords):
         super().__init__(color, position, coords)
         self.name = 'queen'
+
+    def legal_moves(self, board):
+        pass
 
 
 class King(Piece):
@@ -86,3 +109,6 @@ class King(Piece):
         super().__init__(color, position, coords)
         self.name = 'king'
     
+
+    def legal_moves(self, board):
+        pass

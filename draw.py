@@ -40,7 +40,7 @@ def draw_pieces(surface, board):
     '''
     for row in board:
         for col in row:
-            if col.piece != None:
+            if col != None and col.piece != None:
                 color = col.piece.color
                 name = col.piece.name
                 x, y = col.piece.coords
