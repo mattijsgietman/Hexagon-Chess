@@ -69,9 +69,9 @@ class Knight(Piece):
         position_col, position_row = self.position
 
         # Moving to the square 2 places up and 1 place to the left
-        offset = calculate_offset(position_row, 1)
-        target = (position_col - 1 - offset, position_row - 4)
-        if on_board(target):
+        knight_offset = calculate_offset(position_row, position_row - 5)
+        target = (position_col - knight_offset, position_row - 5)
+        if on_board(target, board):
             if empty_hexagon(target, board) or piece_color_on_position(target, board) != self.color:
                 move = Move(self, self.position, target)
                 self.moves.append(move)

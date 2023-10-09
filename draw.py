@@ -34,6 +34,7 @@ def draw_board(surface, color_board):
             if(col != '-'):
                 draw_hexagon(surface, COLOR_DICT[col], (x, y))
 
+
 def draw_pieces(surface, board):
     '''
     Function that draws all the pieces on the chessboard

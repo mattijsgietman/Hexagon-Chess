@@ -96,13 +96,14 @@ def make_move(board, move, piece):
     piece.coords = TILE_TO_POS[piece.position]
     board[move.target[1]][move.target[0]].piece = piece
 
-def on_board(position):
+def on_board(position, board):
     '''
     Check if a given position is on the board
     '''
+    row, col = position
     try:
-        pos = TILE_TO_POS[position]
-        return True
+        if board[col][row] != None:
+            return True
     except:
         return False
 
@@ -141,8 +142,10 @@ def has_moved(piece):
     if piece.name == 'pawn':
         piece.has_moved = True
 
-def calculate_offset(position_row, position_target, board):
+def calculate_offset(start_row, target_row):
     ''' 
     This function calculates the offset that should be used to move from hex A, to hex B
     '''
-    pass
+    if start_row % 2 == 0 and target_row % 2 == 1:
+        return 1
+    return 0

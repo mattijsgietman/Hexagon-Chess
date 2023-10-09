@@ -45,6 +45,7 @@ while running:
                 selected_piece.legal_moves(board)
                 targets = find_target_locations(selected_piece.moves)
                 draw_selected_hexagons(screen, targets)
+                pygame.image.save(screen, "knigtmovementcorrect.jpg")
 
             if selected_piece is not None and selected_hexagon[1] is not None:                                  # If this is the case make a move
                 move = Move(selected_piece, selected_hexagon[0], selected_hexagon[1])
