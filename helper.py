@@ -99,7 +99,7 @@ def make_move(board, move, piece):
 def on_board(position, board):
     '''
     Check if a given position is on the board
-    '''
+    ''' 
     row, col = position
     try:
         if board[col][row] != None:
@@ -120,7 +120,7 @@ def empty_hexagon(position, board):
 
 def piece_color_on_position(position, board):
     '''
-    Return if a square is empty
+    Return color of piece on hexagon position
     '''
     row, col = position
     return board[col][row].piece.color

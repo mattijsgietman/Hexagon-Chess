@@ -14,7 +14,6 @@ class Pawn(Piece):
     def __init__(self, color, position, coords):
         super().__init__(color, position, coords)
         self.name = 'pawn'
-        self.dir = -1 if color == 'white' else 1
         self.has_moved = False
 
     def legal_moves(self, board):
@@ -25,32 +24,26 @@ class Pawn(Piece):
         self.moves = []
         position_col, position_row = self.position
 
-        # Add going one step forward as a move
-        target = (position_col, position_row + (2 * self.dir))
+        target = (position_col, position_row - 2) if self.color == 'white' else (position_col, position_row + 2)
         if on_board(target, board) and empty_hexagon(target, board):
             move = Move(self, self.position, target)
             self.moves.append(move)
+        
+        if on_board(target, board) and empty_hexagon(target, board) and self.has_moved == False:
+            target = (position_col, position_row - 4) if self.color == 'white' else (position_col, position_row + 4)
+            if on_board(target, board) and empty_hexagon(target, board):
+                move = Move(self, self.position, target)
+                self.moves.append(move)
 
-            # Add going two steps forward as a move
-            if not self.has_moved:
-                target = (position_col, position_row + (4 * self.dir))
-                if on_board(target, board) and empty_hexagon(target, board):
-                    move = Move(self, self.position, target)
-                    self.moves.append(move)
-
-        # Taking an enemy piece to the left
-        target = (position_col, position_row + (1 * self.dir))
+        target = (position_col - 1, position_row - 1) if self.color == 'white' else (position_col - 1, position_row + 1)
         if on_board(target, board) and not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
             move = Move(self, self.position, target)
             self.moves.append(move)
-
-        # Taking an enemy piece to the right
-        target = (position_col + 1, position_row + (1 * self.dir))
+        
+        target = (position_col + 1, position_row - 1) if self.color == 'white' else (position_col + 1, position_row + 1)
         if on_board(target, board) and not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
             move = Move(self, self.position, target)
-            self.moves.append(move) 
-
-        return self.moves
+            self.moves.append(move)
 
 
 class Knight(Piece):
@@ -84,8 +77,29 @@ class Bishop(Piece):
         self.name = 'bishop'
 
     def legal_moves(self, board):
-        pass
+        self.moves = []
+        directions = [(-1, -3), (1, -3), (-1, 3), (1,3), (2,0), (-2,0)]
 
+        for direction in directions:
+            counter = 1
+            position_col, position_row = self.position
+            direction_col, direction_row = direction
+            target = (position_col + direction_col, position_row + direction_row)
+
+            while True:
+                target = (position_col + (direction_col * counter), position_row + (direction_row * counter))
+                if on_board(target, board):
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) == self.color:
+                        break
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
+                        move = Move(self, self.position, target)
+                        self.moves.append(move)
+                        break
+                    move = Move(self, self.position, target)
+                    self.moves.append(move)
+                    counter += 1
+                else:
+                    break
 
 class Rook(Piece):
     def __init__(self, color, position, coords):
@@ -93,7 +107,29 @@ class Rook(Piece):
         self.name = 'rook'
 
     def legal_moves(self, board):
-        pass
+        self.moves = []
+        directions = [(0, -2), (1, -1), (1, 1), (0, 2), (-1, 1), (-1, -1)]
+
+        for direction in directions:
+            counter = 1
+            position_col, position_row = self.position
+            direction_col, direction_row = direction
+            target = (position_col + direction_col, position_row + direction_row)
+
+            while True:
+                target = (position_col + (direction_col * counter), position_row + (direction_row * counter))
+                if on_board(target, board):
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) == self.color:
+                        break
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
+                        move = Move(self, self.position, target)
+                        self.moves.append(move)
+                        break
+                    move = Move(self, self.position, target)
+                    self.moves.append(move)
+                    counter += 1
+                else:
+                    break
 
 
 class Queen(Piece):
@@ -102,7 +138,29 @@ class Queen(Piece):
         self.name = 'queen'
 
     def legal_moves(self, board):
-        pass
+        self.moves = []
+        directions = [(-1, -3), (1, -3), (-1, 3), (1,3), (2,0), (-2,0), (0, -2), (1, -1), (1, 1), (0, 2), (-1, 1), (-1, -1)]
+
+        for direction in directions:
+            counter = 1
+            position_col, position_row = self.position
+            direction_col, direction_row = direction
+            target = (position_col + direction_col, position_row + direction_row)
+
+            while True:
+                target = (position_col + (direction_col * counter), position_row + (direction_row * counter))
+                if on_board(target, board):
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) == self.color:
+                        break
+                    if not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
+                        move = Move(self, self.position, target)
+                        self.moves.append(move)
+                        break
+                    move = Move(self, self.position, target)
+                    self.moves.append(move)
+                    counter += 1
+                else:
+                    break
 
 
 class King(Piece):
@@ -112,4 +170,17 @@ class King(Piece):
     
 
     def legal_moves(self, board):
-        pass
+        self.moves = []
+        directions = [(0,-2), (-1,-3), (1, -3), (-1,-1), (1, -1),
+                      (-2, 0), (2, 0),
+                      (-1,-1), (1,1), (0,2), (-1, 1), (-1, 3), (1,3)  
+                     ]
+        position_col, position_row = self.position
+
+        for direction in directions:
+            direction_col, direction_row = direction
+            target = (position_col + direction_col, position_row + direction_row)
+            if on_board(target, board):
+                if empty_hexagon(target, board) or piece_color_on_position(target, board) != self.color:
+                    move = Move(self, self.position, target)
+                    self.moves.append(move)

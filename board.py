@@ -40,9 +40,7 @@ class Board():
             self.board[x][y] = hex
 
     def piece_setup(self):
-        self.board[6][5].piece = Knight('white', (5,6), TILE_TO_POS[(5,6)])
 
-        '''
         # Setting up the black pieces
         self.board[0][5].piece = Bishop('black', (5,0), TILE_TO_POS[(5,0)])
         self.board[1][4].piece = Queen('black', (4,1), TILE_TO_POS[(4,1)])
@@ -82,4 +80,3 @@ class Board():
         self.board[13][4].piece = Pawn('white', (4,13), TILE_TO_POS[(4,13)])
         self.board[13][6].piece = Pawn('white', (6,13), TILE_TO_POS[(6,13)])
         self.board[12][5].piece = Pawn('white', (5,12), TILE_TO_POS[(5,12)])
-        '''
