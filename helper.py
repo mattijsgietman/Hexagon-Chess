@@ -123,7 +123,6 @@ def piece_color_on_position(position, board):
     Return if a square is empty
     '''
     row, col = position
-    print(col, row)
     return board[col][row].piece.color
 
 def find_target_locations(moves):
@@ -141,11 +140,3 @@ def has_moved(piece):
     '''
     if piece.name == 'pawn':
         piece.has_moved = True
-
-def calculate_offset(start_row, target_row):
-    ''' 
-    This function calculates the offset that should be used to move from hex A, to hex B
-    '''
-    if start_row % 2 == 0 and target_row % 2 == 1:
-        return 1
-    return 0

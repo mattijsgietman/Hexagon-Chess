@@ -1,6 +1,6 @@
 from CONST import *
 from move import Move
-from helper import on_board, empty_hexagon, piece_color_on_position, calculate_offset
+from helper import on_board, empty_hexagon, piece_color_on_position
 
 class Piece:
     def __init__(self, color, position, coords):
@@ -25,32 +25,30 @@ class Pawn(Piece):
         self.moves = []
         position_col, position_row = self.position
 
-        # Vertical moves  
-
         # Add going one step forward as a move
         target = (position_col, position_row + (2 * self.dir))
-        if empty_hexagon(target, board):
+        if on_board(target, board) and empty_hexagon(target, board):
             move = Move(self, self.position, target)
             self.moves.append(move)
 
             # Add going two steps forward as a move
             if not self.has_moved:
                 target = (position_col, position_row + (4 * self.dir))
-                if empty_hexagon(target, board):
+                if on_board(target, board) and empty_hexagon(target, board):
                     move = Move(self, self.position, target)
                     self.moves.append(move)
 
         # Taking an enemy piece to the left
         target = (position_col, position_row + (1 * self.dir))
-        if not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
+        if on_board(target, board) and not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
             move = Move(self, self.position, target)
             self.moves.append(move)
 
         # Taking an enemy piece to the right
         target = (position_col + 1, position_row + (1 * self.dir))
-        if not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
+        if on_board(target, board) and not empty_hexagon(target, board) and piece_color_on_position(target, board) != self.color:
             move = Move(self, self.position, target)
-            self.moves.append(move)
+            self.moves.append(move) 
 
         return self.moves
 
@@ -64,18 +62,21 @@ class Knight(Piece):
         '''
         Calculate all the valid moves for a knight to make
         '''
-        
         self.moves = []
+        directions = [
+            (-1, -5), (-2, -4), (1, -5), (2, -4),
+            (3, -1), (3, 1), (-3, 1), (-3, -1),
+            (-1, 5), (-2, 4), (1, 5), (2, 4)
+            ]
         position_col, position_row = self.position
 
-        # Moving to the square 2 places up and 1 place to the left
-        knight_offset = calculate_offset(position_row, position_row - 5)
-        target = (position_col - knight_offset, position_row - 5)
-        if on_board(target, board):
-            if empty_hexagon(target, board) or piece_color_on_position(target, board) != self.color:
-                move = Move(self, self.position, target)
-                self.moves.append(move)
-
+        for direction in directions:
+            direction_col, direction_row = direction
+            target = (position_col + direction_col, position_row + direction_row)
+            if on_board(target, board):
+                if empty_hexagon(target, board) or piece_color_on_position(target, board) != self.color:
+                    move = Move(self, self.position, target)
+                    self.moves.append(move)
 
 class Bishop(Piece):
     def __init__(self, color, position, coords):

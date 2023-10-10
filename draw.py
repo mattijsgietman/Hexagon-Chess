@@ -1,6 +1,7 @@
 # Import libraries
 import pygame
 import os
+import numpy as np
 
 from math import *
 
@@ -33,7 +34,7 @@ def draw_board(surface, color_board):
                 x += SPACING_X / 2
             if(col != '-'):
                 draw_hexagon(surface, COLOR_DICT[col], (x, y))
-
+   
 
 def draw_pieces(surface, board):
     '''
@@ -60,3 +61,18 @@ def draw_selected_hexagons(surface, positions):
             coord = TILE_TO_POS[pos]
             draw_hexagon(surface, COLOR_DICT['TARGET_COLOR'], coord) 
 
+def draw_board_coords(surface, board):
+    '''
+    Function to draw all coordinates the hexagons that make up the chess board
+    '''
+    for i, row in enumerate(COLOR_BOARD):
+        for j, col in enumerate(row):
+            # Calculate the position of each hexagon in the grid
+            x = TOP_SQ_X + j * SPACING_X
+            y = TOP_SQ_Y + i * SPACING_Y
+
+            # Alternate the rows horizontally to create the honeycomb pattern
+            if i % 2 != 0:
+                x += SPACING_X / 2
+            if(col != '-'):
+                draw_hexagon(surface, COLOR_DICT[col], (x, y))
